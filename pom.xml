@@ -64,4 +64,21 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>promethistai</id>
+            <name>PromethistAI repository</name>
+            <url>https://repository.promethist.ai/maven/</url>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>promethistai</id>
+            <name>PromethistAI repository</name>
+            <url>file:/ext/cluster/default/default/repository/maven/</url>
+        </repository>
+    </distributionManagement>
+
 </project>
