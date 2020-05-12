@@ -63,7 +63,7 @@ abstract class AbstractDummyDialogue : BasicDialogue() {
         response0.next = input1
         intent1.next = function1
         intent2.next = function2
-        response1.next = stop
+        response1.next = stopSession
         response2.next = response0
     }
 }
