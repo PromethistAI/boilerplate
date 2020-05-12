@@ -4,13 +4,13 @@ import com.promethist.core.*
 import com.promethist.core.type.*
 import com.promethist.core.dialogue.*
 
-abstract class AbstractDummyDialogue : Dialogue() {
+abstract class AbstractDummyDialogue : BasicDialogue() {
 
     // init code
     data class Movie(val name: String, val director: String)
 
-    var yesCounter by profileAttribute<Int>()
-    var noCounter by profileAttribute<Int>()
+    var yesCounter by userAttribute<Int>()
+    var noCounter by userAttribute<Int>()
 
     val data by loader<Dynamic>("./resources/data")
     val movies by loader<List<Movie>>("./resources/movies")
@@ -43,7 +43,7 @@ abstract class AbstractDummyDialogue : Dialogue() {
         yesCounter++
         logger.info(describe(data))
         logger.info(movies.toString())
-        logger.info(profile.attributes.toString())
+        logger.info(userProfile.attributes.toString())
         logger.info("function1 executed")
         trans1
     }
@@ -52,7 +52,7 @@ abstract class AbstractDummyDialogue : Dialogue() {
         val trans1 = Transition(response0)
         // function code
         noCounter++
-        logger.info(profile.attributes.toString())
+        logger.info(userProfile.attributes.toString())
         logger.info("function2 executed")
         trans1
     }
