@@ -4,10 +4,10 @@ import com.promethist.core.dialogue.*
 
 class Model1 : BasicDialogue() {
 
-    override val name = "boilerplate/dummy2/1"
+    override val dialogueName = "boilerplate/dummy2/1"
 
     val welcome = Response(
-            { """This is dummy dialogue defined by ${name}. Do you want to proceed?""" }
+            { """This is dummy dialogue defined by ${dialogueName}. Do you want to proceed?""" }
     )
 
     val intent_yes = Intent("intent1","yes", "okay")

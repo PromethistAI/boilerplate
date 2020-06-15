@@ -1,6 +1,5 @@
 package com.promethist.boilerplate
 
-import com.promethist.core.*
 import com.promethist.core.type.*
 import com.promethist.core.dialogue.*
 
@@ -9,15 +8,46 @@ abstract class AbstractDummyDialogue : BasicDialogue() {
     // init code
     data class Movie(val name: String, val director: String)
 
-    var yesCounter by userAttribute<Int>()
-    var noCounter by userAttribute<Int>()
+    var yesCounter by session { 0 }
+    var noCounter by session { 0 }
+    var aBoolean by user { false }
+    var aString by user { "" }
+    var aInt by user { 0 }
+    var aDateTime by user { now }
+
+    val aBooleanVal by user { Memory(false) }
+    val aStringVal by user { Memory("") }
+    val aIntVal by user { Memory(0) }
+
+    val aBooleanSet by user { BooleanMutableSet() }
+    val aStringSet by user { StringMutableSet() }
+    val aIntSet by user { IntMutableSet() }
+
+    val aMemoryList by user { MemoryMutableList<Int>() }
 
     val data by loader<Dynamic>("./resources/data")
     val movies by loader<List<Movie>>("./resources/movies")
 
+    val seq1 by userSequence(listOf("first", "second", "third")) { nextInLine(2.minute) }
+    val seq2 by userSequence(listOf("blue", "green", "yellow")) { nextRandom(5.minute, 10, 15.minute) }
+
+    data class Example(override val name: String, val result: Int) : NamedEntity
+    val examples = mutableListOf<Example>().apply {
+        (1..10).forEach { v1 ->
+            (1..10).forEach { v2 ->
+                add(Example("$v1 plus $v2", v1 + v2))
+                if (v2 > v1)
+                    add(Example("$v1 minus $v2", v1 - v2))
+                if (v1 * v2 < 40)
+                    add(Example("$v1 times $v2", v1 * v2))
+            }
+        }
+    }
+    val nextExample by sessionSequence(examples) // not that no sequencer function = nextRandom() will be used by default
+
     // nodes
     val response0 = Response(
-            { """This is dummy dialogue defined by ${name}. Do you want to proceed?""" }
+            { """This is dummy dialogue defined by ${dialogueName}. Do you want to proceed?""" }
     )
 
     val intent1 = Intent("intent1","yes", "okay")
@@ -30,7 +60,7 @@ abstract class AbstractDummyDialogue : BasicDialogue() {
     }
 
     val response1 = Response(
-            { """you said ${input.transcript.text}, yes count is ${yesCounter}, no count is ${noCounter}""" }
+            { """you said ${input.transcript.text}, yes count is #yesCounter, no count is ${noCounter}""" }
     )
 
     val response2 = Response(
@@ -41,6 +71,7 @@ abstract class AbstractDummyDialogue : BasicDialogue() {
         val trans1 = Transition(response1)
         // function code
         yesCounter++
+        addResponseItem("Hi, #context.user.name. yesCounter is #yesCounter1.")
         logger.info(describe(data))
         logger.info(movies.toString())
         logger.info(userProfile.attributes.toString())
@@ -52,7 +83,17 @@ abstract class AbstractDummyDialogue : BasicDialogue() {
         val trans1 = Transition(response0)
         // function code
         noCounter++
-        logger.info(userProfile.attributes.toString())
+        aIntVal.value++
+        aIntSet.add(1)
+        aMemoryList.add(1)
+        aMemoryList.filter { it.value > 1 }
+        logger.info("seq1.next = ${seq1.next}")
+        logger.info("seq1.last = ${seq1.last}")
+        logger.info("seq2.next = ${seq2.next}")
+        logger.info("seq2.last = ${seq2.last}")
+        //logger.info("seq2 = $seq2")
+        logger.info("session.attributes = ${session.attributes}")
+        logger.info("userProfile.attributes = ${userProfile.attributes}")
         logger.info("function2 executed")
         trans1
     }
