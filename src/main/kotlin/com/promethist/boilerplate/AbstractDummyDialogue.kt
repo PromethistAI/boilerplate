@@ -1,5 +1,6 @@
 package com.promethist.boilerplate
 
+import com.promethist.core.ExpectedPhrase
 import com.promethist.core.type.*
 import com.promethist.core.dialogue.*
 
@@ -21,7 +22,7 @@ abstract class AbstractDummyDialogue : BasicDialogue() {
 
     val aBooleanSet by user { BooleanMutableSet() }
     val aStringSet by user { StringMutableSet() }
-    val aIntSet by user { IntMutableSet() }
+    val aIntSet by user(null) { IntMutableSet() }
 
     val aMemoryList by user { MemoryMutableList<Int>() }
 
@@ -47,16 +48,15 @@ abstract class AbstractDummyDialogue : BasicDialogue() {
 
     // nodes
     val response0 = Response(
-            { """This is dummy dialogue defined by ${dialogueName}. Do you want to proceed?""" }
+            { """Hello, ${nickname}. This is dummy dialogue defined by ${dialogueName}. Do you want to proceed?""" }
     )
 
     val intent1 = Intent("intent1","yes", "okay")
 
     val intent2 = Intent("intent2", "no", "nope")
 
-    val input1 = UserInput(arrayOf(intent1, intent2)) {
-        processPipeline()
-        null
+    val input1 = UserInput(arrayOf(intent1, intent2), arrayOf()) {
+        pass
     }
 
     val response1 = Response(
@@ -76,6 +76,10 @@ abstract class AbstractDummyDialogue : BasicDialogue() {
         logger.info(movies.toString())
         logger.info(userProfile.attributes.toString())
         logger.info("function1 executed")
+
+        listOf("ireland", "iceland").forEach {
+            expectedPhrases.add(ExpectedPhrase(it/*, optional boostValue = 0.0F .. 1.0F */))
+        }
         trans1
     }
 
@@ -87,6 +91,7 @@ abstract class AbstractDummyDialogue : BasicDialogue() {
         aIntSet.add(1)
         aMemoryList.add(1)
         aMemoryList.filter { it.value > 1 }
+        logger.info(describe(now - 5.minute))
         logger.info("seq1.next = ${seq1.next}")
         logger.info("seq1.last = ${seq1.last}")
         logger.info("seq2.next = ${seq2.next}")
