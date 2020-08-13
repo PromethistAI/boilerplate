@@ -4,6 +4,7 @@ import com.promethist.core.dialogue.*
 
 class Model1 : BasicDialogue() {
 
+    override val dialogueId = "d00000000000000000000201"
     override val dialogueName = "boilerplate/dummy2/1"
 
     val welcome = Response(

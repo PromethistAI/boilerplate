@@ -6,6 +6,7 @@ import com.promethist.core.runtime.*
 
 class Model : BasicDialogue() {
 
+    override val dialogueId = "d00000000000000000000002"
     override val dialogueName = "boilerplate/dummy/2"
     override val voice = Voice.Gabriela
 
