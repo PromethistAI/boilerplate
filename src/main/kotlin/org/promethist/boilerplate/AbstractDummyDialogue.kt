@@ -1,8 +1,9 @@
-package com.promethist.boilerplate
+package org.promethist.boilerplate
 
-import com.promethist.core.ExpectedPhrase
-import com.promethist.core.type.*
-import com.promethist.core.dialogue.*
+import org.promethist.core.ExpectedPhrase
+import org.promethist.core.type.*
+import org.promethist.core.dialogue.*
+import org.promethist.core.type.value.Duration
 
 abstract class AbstractDummyDialogue : BasicDialogue() {
 
@@ -19,6 +20,7 @@ abstract class AbstractDummyDialogue : BasicDialogue() {
     val aBooleanVal by user { Memory(false) }
     val aStringVal by user { Memory("") }
     val aIntVal by user { Memory(0) }
+    val clientAttrA by client { 0 }
 
     val aBooleanSet by user { BooleanMutableSet() }
     val aStringSet by user { StringMutableSet() }
@@ -70,6 +72,7 @@ abstract class AbstractDummyDialogue : BasicDialogue() {
     val function1 = Function {
         val trans1 = Transition(response1)
         // function code
+        val x = input.entity<Duration>()
         yesCounter++
         addResponseItem("Hi, #context.user.name. yesCounter is #yesCounter1.")
         logger.info(describe(data))
@@ -78,7 +81,7 @@ abstract class AbstractDummyDialogue : BasicDialogue() {
         logger.info("function1 executed")
 
         listOf("ireland", "iceland").forEach {
-            expectedPhrases.add(ExpectedPhrase(it/*, optional boostValue = 0.0F .. 1.0F */))
+            turn.expectedPhrases.add(ExpectedPhrase(it/*, optional boostValue = 0.0F .. 1.0F */))
         }
         trans1
     }
