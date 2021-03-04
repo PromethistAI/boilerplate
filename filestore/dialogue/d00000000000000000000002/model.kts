@@ -1,8 +1,8 @@
 package boilerplate.dummy._2
 
-import com.promethist.core.dialogue.*
-import com.promethist.core.model.Voice
-import com.promethist.core.runtime.*
+import ai.flowstorm.core.dialogue.*
+import ai.flowstorm.core.model.Voice
+import ai.flowstorm.core.runtime.*
 
 class Model : BasicDialogue() {
 

@@ -1,9 +1,9 @@
-package org.promethist.boilerplate
+package ai.flowstorm.boilerplate
 
-import org.promethist.core.ExpectedPhrase
-import org.promethist.core.type.*
-import org.promethist.core.dialogue.*
-import org.promethist.core.type.value.Duration
+import ai.flowstorm.core.ExpectedPhrase
+import ai.flowstorm.core.type.*
+import ai.flowstorm.core.dialogue.*
+import ai.flowstorm.core.type.value.Duration
 
 abstract class AbstractDummyDialogue : BasicDialogue() {
 

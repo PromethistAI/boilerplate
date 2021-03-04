@@ -1,6 +1,6 @@
 build release:
   stage: build
-  image: registry.gitlab.com/promethist/system/builder
+  image: registry.gitlab.com/promethistai/system/builder
   only:
     - tags
   script:
@@ -9,7 +9,7 @@ build release:
 
 build snapshot:
   stage: build
-  image: registry.gitlab.com/promethist/system/builder
+  image: registry.gitlab.com/promethistai/system/builder
   only:
     - develop
   script:
